@@ -1,85 +1,85 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useTrainingPlanStore, type TreadmillParams } from "@/lib/store"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft, ArrowRight, Settings } from "lucide-react"
+import { useState, useEffect } from "react";
+import { useTrainingPlanStore, type TreadmillParams } from "@/lib/store";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, ArrowRight, Settings } from "lucide-react";
 
 interface FieldError {
-  inclineMin?: string
-  inclineMax?: string
-  inclineStep?: string
-  maxSpeed?: string
-  speedStep?: string
+  inclineMin?: string;
+  inclineMax?: string;
+  inclineStep?: string;
+  maxSpeed?: string;
+  speedStep?: string;
 }
 
 export function StepTreadmill() {
-  const treadmill = useTrainingPlanStore((state) => state.treadmill)
-  const setTreadmill = useTrainingPlanStore((state) => state.setTreadmill)
-  const setStep = useTrainingPlanStore((state) => state.setStep)
+  const treadmill = useTrainingPlanStore((state) => state.treadmill);
+  const setTreadmill = useTrainingPlanStore((state) => state.setTreadmill);
+  const setStep = useTrainingPlanStore((state) => state.setStep);
 
-  const [form, setForm] = useState<TreadmillParams>(treadmill)
-  const [errors, setErrors] = useState<FieldError>({})
-  const [touched, setTouched] = useState<Record<string, boolean>>({})
+  const [form, setForm] = useState<TreadmillParams>(treadmill);
+  const [errors, setErrors] = useState<FieldError>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    setForm(treadmill)
-  }, [treadmill])
+    setForm(treadmill);
+  }, [treadmill]);
 
   const validate = (values: TreadmillParams): FieldError => {
-    const newErrors: FieldError = {}
+    const newErrors: FieldError = {};
 
     if (values.inclineMin_pct < -6 || values.inclineMin_pct > 0) {
-      newErrors.inclineMin = "Must be between -6 and 0"
+      newErrors.inclineMin = "Must be between -6 and 0";
     }
 
     if (values.inclineMax_pct <= values.inclineMin_pct) {
-      newErrors.inclineMax = "Must be greater than minimum incline"
+      newErrors.inclineMax = "Must be greater than minimum incline";
     } else if (values.inclineMax_pct > 40) {
-      newErrors.inclineMax = "Must be 40 or less"
+      newErrors.inclineMax = "Must be 40 or less";
     }
 
     if (values.inclineStep_pct < 0.1 || values.inclineStep_pct > 2.0) {
-      newErrors.inclineStep = "Must be between 0.1 and 2.0"
+      newErrors.inclineStep = "Must be between 0.1 and 2.0";
     } else if (values.inclineStep_pct > values.inclineMax_pct - values.inclineMin_pct) {
-      newErrors.inclineStep = "Must be less than incline range"
+      newErrors.inclineStep = "Must be less than incline range";
     }
 
     if (values.maxSpeed_mph < 5 || values.maxSpeed_mph > 20) {
-      newErrors.maxSpeed = "Must be between 5 and 20 mph"
+      newErrors.maxSpeed = "Must be between 5 and 20 mph";
     }
 
     if (values.speedStep_mph < 0.05 || values.speedStep_mph > 1) {
-      newErrors.speedStep = "Must be between 0.05 and 1 mph"
+      newErrors.speedStep = "Must be between 0.05 and 1 mph";
     }
 
-    return newErrors
-  }
+    return newErrors;
+  };
 
   const handleChange = (field: keyof TreadmillParams, value: string) => {
-    const numValue = parseFloat(value) || 0
-    const newForm = { ...form, [field]: numValue }
-    setForm(newForm)
-    
+    const numValue = parseFloat(value) || 0;
+    const newForm = { ...form, [field]: numValue };
+    setForm(newForm);
+
     if (touched[field]) {
-      setErrors(validate(newForm))
+      setErrors(validate(newForm));
     }
-  }
+  };
 
   const handleBlur = (field: string) => {
-    setTouched((prev) => ({ ...prev, [field]: true }))
-    setErrors(validate(form))
-  }
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    setErrors(validate(form));
+  };
 
-  const isValid = Object.keys(validate(form)).length === 0
+  const isValid = Object.keys(validate(form)).length === 0;
 
   const handleNext = () => {
-    setTreadmill(form)
-    setStep(3)
-  }
+    setTreadmill(form);
+    setStep(3);
+  };
 
   return (
     <div className="space-y-6">
@@ -211,5 +211,5 @@ export function StepTreadmill() {
         </Button>
       </div>
     </div>
-  )
+  );
 }

@@ -1,78 +1,78 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useTrainingPlanStore } from "@/lib/store"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { ArrowLeft, Zap, Clock, AlertTriangle } from "lucide-react"
+import { useState } from "react";
+import { useTrainingPlanStore } from "@/lib/store";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ArrowLeft, Zap, Clock, AlertTriangle } from "lucide-react";
 
-type InputMode = "goalTime" | "vo2max"
+type InputMode = "goalTime" | "vo2max";
 
 export function StepFitness() {
-  const gpx = useTrainingPlanStore((state) => state.gpx)
-  const treadmill = useTrainingPlanStore((state) => state.treadmill)
-  const setFitness = useTrainingPlanStore((state) => state.setFitness)
-  const setStep = useTrainingPlanStore((state) => state.setStep)
+  const gpx = useTrainingPlanStore((state) => state.gpx);
+  const treadmill = useTrainingPlanStore((state) => state.treadmill);
+  const setFitness = useTrainingPlanStore((state) => state.setFitness);
+  const setStep = useTrainingPlanStore((state) => state.setStep);
 
-  const [inputMode, setInputMode] = useState<InputMode>("goalTime")
-  const [goalHours, setGoalHours] = useState(0)
-  const [goalMinutes, setGoalMinutes] = useState(0)
-  const [goalSeconds, setGoalSeconds] = useState(0)
-  const [vo2max, setVo2max] = useState(50)
-  const [warning, setWarning] = useState<string | null>(null)
+  const [inputMode, setInputMode] = useState<InputMode>("goalTime");
+  const [goalHours, setGoalHours] = useState(0);
+  const [goalMinutes, setGoalMinutes] = useState(0);
+  const [goalSeconds, setGoalSeconds] = useState(0);
+  const [vo2max, setVo2max] = useState(50);
+  const [warning, setWarning] = useState<string | null>(null);
 
   const calculateRacePace = (): number | null => {
-    if (!gpx) return null
+    if (!gpx) return null;
 
-    const totalDistance_km = gpx.totalDistance_m / 1000
+    const totalDistance_km = gpx.totalDistance_m / 1000;
 
     if (inputMode === "goalTime") {
-      const goalTime_sec = goalHours * 3600 + goalMinutes * 60 + goalSeconds
-      if (goalTime_sec <= 0) return null
-      return totalDistance_km / (goalTime_sec / 3600)
+      const goalTime_sec = goalHours * 3600 + goalMinutes * 60 + goalSeconds;
+      if (goalTime_sec <= 0) return null;
+      return totalDistance_km / (goalTime_sec / 3600);
     } else {
-      if (vo2max < 20 || vo2max > 90) return null
-      const pace_m_per_min = (vo2max - 3.5) / 0.2
-      return (pace_m_per_min * 60) / 1000
+      if (vo2max < 20 || vo2max > 90) return null;
+      const pace_m_per_min = (vo2max - 3.5) / 0.2;
+      return (pace_m_per_min * 60) / 1000;
     }
-  }
+  };
 
-  const racePace_kph = calculateRacePace()
-  const maxSpeed_kph = treadmill.maxSpeed_mph * 1.60934
-  const isPaceExceeded = racePace_kph !== null && racePace_kph > maxSpeed_kph
+  const racePace_kph = calculateRacePace();
+  const maxSpeed_kph = treadmill.maxSpeed_mph * 1.60934;
+  const isPaceExceeded = racePace_kph !== null && racePace_kph > maxSpeed_kph;
 
-  const isValid = racePace_kph !== null && racePace_kph > 0
+  const isValid = racePace_kph !== null && racePace_kph > 0;
 
   const handleGenerate = () => {
-    if (!racePace_kph) return
+    if (!racePace_kph) return;
 
     const goalTime_sec =
-      inputMode === "goalTime"
-        ? goalHours * 3600 + goalMinutes * 60 + goalSeconds
-        : undefined
+      inputMode === "goalTime" ? goalHours * 3600 + goalMinutes * 60 + goalSeconds : undefined;
 
     setFitness({
       goalTime_sec,
       vo2max: inputMode === "vo2max" ? vo2max : undefined,
       racePace_kph,
-    })
+    });
 
     if (isPaceExceeded) {
-      setWarning("Your target pace exceeds your treadmill's maximum speed. Intervals will be capped.")
+      setWarning(
+        "Your target pace exceeds your treadmill's maximum speed. Intervals will be capped.",
+      );
     }
 
-    setStep(4)
-  }
+    setStep(4);
+  };
 
   const formatPace = (kph: number) => {
-    const minPerKm = 60 / kph
-    const mins = Math.floor(minPerKm)
-    const secs = Math.round((minPerKm - mins) * 60)
-    return `${mins}:${secs.toString().padStart(2, "0")} /km`
-  }
+    const minPerKm = 60 / kph;
+    const mins = Math.floor(minPerKm);
+    const secs = Math.round((minPerKm - mins) * 60);
+    return `${mins}:${secs.toString().padStart(2, "0")} /km`;
+  };
 
   return (
     <div className="space-y-6">
@@ -95,9 +95,7 @@ export function StepFitness() {
               <Clock className="h-5 w-5 text-primary" />
               <CardTitle className="text-lg">Goal Race Time</CardTitle>
             </div>
-            <CardDescription>
-              Enter your target finish time for the race
-            </CardDescription>
+            <CardDescription>Enter your target finish time for the race</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-3 gap-4">
@@ -152,9 +150,7 @@ export function StepFitness() {
               <Zap className="h-5 w-5 text-primary" />
               <CardTitle className="text-lg">VO2 Max</CardTitle>
             </div>
-            <CardDescription>
-              Use your VO2 max to estimate target pace
-            </CardDescription>
+            <CardDescription>Use your VO2 max to estimate target pace</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
@@ -182,12 +178,12 @@ export function StepFitness() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Calculated Race Pace</p>
-                <p className="text-2xl font-bold">{racePace_kph.toFixed(1)} km/h</p>
+                <p className="text-2xl font-bold">{racePace_mph.toFixed(1)} mph</p>
                 <p className="text-sm text-muted-foreground">{formatPace(racePace_kph)}</p>
               </div>
               <div className="text-right">
                 <p className="text-sm text-muted-foreground">Treadmill Max Speed</p>
-                <p className="text-2xl font-bold">{maxSpeed_kph.toFixed(1)} km/h</p>
+                <p className="text-2xl font-bold">{maxSpeed_mph.toFixed(1)} mph</p>
               </div>
             </div>
           </CardContent>
@@ -220,5 +216,5 @@ export function StepFitness() {
         </Button>
       </div>
     </div>
-  )
+  );
 }

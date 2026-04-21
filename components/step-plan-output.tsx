@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useEffect } from "react"
-import { useTrainingPlanStore } from "@/lib/store"
-import { generatePlan } from "@/lib/plan-generator"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useEffect } from "react";
+import { useTrainingPlanStore } from "@/lib/store";
+import { generatePlan } from "@/lib/plan-generator";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -12,63 +12,58 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { ArrowLeft, Printer, AlertTriangle, RotateCcw } from "lucide-react"
-import { ElevationChart } from "./elevation-chart"
+} from "@/components/ui/table";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { ArrowLeft, Printer, AlertTriangle, RotateCcw } from "lucide-react";
+import { ElevationChart } from "./elevation-chart";
 
 export function StepPlanOutput() {
-  const gpx = useTrainingPlanStore((state) => state.gpx)
-  const treadmill = useTrainingPlanStore((state) => state.treadmill)
-  const fitness = useTrainingPlanStore((state) => state.fitness)
-  const plan = useTrainingPlanStore((state) => state.plan)
-  const setPlan = useTrainingPlanStore((state) => state.setPlan)
-  const setStep = useTrainingPlanStore((state) => state.setStep)
-  const reset = useTrainingPlanStore((state) => state.reset)
+  const gpx = useTrainingPlanStore((state) => state.gpx);
+  const treadmill = useTrainingPlanStore((state) => state.treadmill);
+  const fitness = useTrainingPlanStore((state) => state.fitness);
+  const plan = useTrainingPlanStore((state) => state.plan);
+  const setPlan = useTrainingPlanStore((state) => state.setPlan);
+  const setStep = useTrainingPlanStore((state) => state.setStep);
+  const reset = useTrainingPlanStore((state) => state.reset);
 
   useEffect(() => {
     if (gpx && fitness && !plan) {
-      const generatedPlan = generatePlan(gpx, treadmill, fitness)
-      setPlan(generatedPlan)
+      const generatedPlan = generatePlan(gpx, treadmill, fitness);
+      setPlan(generatedPlan);
     }
-  }, [gpx, treadmill, fitness, plan, setPlan])
+  }, [gpx, treadmill, fitness, plan, setPlan]);
 
   if (!gpx || !fitness || !plan) {
     return (
       <div className="flex items-center justify-center py-12">
         <p className="text-muted-foreground">Generating plan...</p>
       </div>
-    )
+    );
   }
 
   const formatDuration = (seconds: number) => {
-    const mins = Math.floor(seconds / 60)
-    const secs = Math.round(seconds % 60)
-    return `${mins}:${secs.toString().padStart(2, "0")}`
-  }
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.round(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
 
   const formatDistance = (meters: number) => {
-    return `${(meters / 1000).toFixed(2)} km`
-  }
+    return `${(meters / 1000).toFixed(2)} km`;
+  };
 
   const formatTotalDuration = (seconds: number) => {
-    const hours = Math.floor(seconds / 3600)
-    const mins = Math.floor((seconds % 3600) / 60)
-    const secs = Math.round(seconds % 60)
+    const hours = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = Math.round(seconds % 60);
     if (hours > 0) {
-      return `${hours}h ${mins}m ${secs}s`
+      return `${hours}h ${mins}m ${secs}s`;
     }
-    return `${mins}m ${secs}s`
-  }
+    return `${mins}m ${secs}s`;
+  };
 
   const handlePrint = () => {
-    window.print()
-  }
+    window.print();
+  };
 
   return (
     <TooltipProvider>
@@ -120,7 +115,7 @@ export function StepPlanOutput() {
                 </TableHeader>
                 <TableBody>
                   {plan.intervals.map((interval, index) => {
-                    const hasWarning = interval.inclineCapped || interval.speedCapped
+                    const hasWarning = interval.inclineCapped || interval.speedCapped;
                     return (
                       <TableRow
                         key={interval.index}
@@ -138,9 +133,7 @@ export function StepPlanOutput() {
                                   {interval.inclineCapped && (
                                     <p>Course grade exceeded treadmill limits — incline capped</p>
                                   )}
-                                  {interval.speedCapped && (
-                                    <p>Speed capped at treadmill maximum</p>
-                                  )}
+                                  {interval.speedCapped && <p>Speed capped at treadmill maximum</p>}
                                 </TooltipContent>
                               </Tooltip>
                             )}
@@ -176,7 +169,7 @@ export function StepPlanOutput() {
                           {interval.elevChange_m.toFixed(1)}
                         </TableCell>
                       </TableRow>
-                    )
+                    );
                   })}
                 </TableBody>
               </Table>
@@ -196,5 +189,5 @@ export function StepPlanOutput() {
         </div>
       </div>
     </TooltipProvider>
-  )
+  );
 }

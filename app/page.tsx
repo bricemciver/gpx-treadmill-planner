@@ -33,8 +33,7 @@ export default function Home() {
             Treadmill Training Plan Generator
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Upload a GPX route and generate a custom treadmill workout that
-            simulates the terrain
+            Upload a GPX route and generate a custom treadmill workout that simulates the terrain
           </p>
         </header>
 

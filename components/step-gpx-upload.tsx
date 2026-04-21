@@ -1,59 +1,59 @@
-"use client"
+"use client";
 
-import { useState, useCallback } from "react"
-import { useDropzone } from "react-dropzone"
-import { useTrainingPlanStore } from "@/lib/store"
-import { parseGPX } from "@/lib/gpx-utils"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Upload, CheckCircle2, AlertCircle, Mountain, Ruler, ArrowRight } from "lucide-react"
+import { useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
+import { useTrainingPlanStore } from "@/lib/store";
+import { parseGPX } from "@/lib/gpx-utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Upload, CheckCircle2, AlertCircle, Mountain, Ruler, ArrowRight } from "lucide-react";
 
 export function StepGPXUpload() {
-  const [error, setError] = useState<string | null>(null)
-  const [isProcessing, setIsProcessing] = useState(false)
-  const gpx = useTrainingPlanStore((state) => state.gpx)
-  const setGPX = useTrainingPlanStore((state) => state.setGPX)
-  const setStep = useTrainingPlanStore((state) => state.setStep)
+  const [error, setError] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const gpx = useTrainingPlanStore((state) => state.gpx);
+  const setGPX = useTrainingPlanStore((state) => state.setGPX);
+  const setStep = useTrainingPlanStore((state) => state.setStep);
 
   const processFile = useCallback(
     async (file: File) => {
-      setError(null)
-      setIsProcessing(true)
+      setError(null);
+      setIsProcessing(true);
 
       // Check file extension
       if (!file.name.toLowerCase().endsWith(".gpx")) {
-        setError("Please upload a .gpx file")
-        setIsProcessing(false)
-        return
+        setError("Please upload a .gpx file");
+        setIsProcessing(false);
+        return;
       }
 
       try {
-        const content = await file.text()
-        const result = parseGPX(content)
+        const content = await file.text();
+        const result = parseGPX(content);
 
         if (!result.success) {
-          setError(result.error)
+          setError(result.error);
         } else {
-          setGPX(result.data)
+          setGPX(result.data);
         }
       } catch {
-        setError("File could not be read as GPX")
+        setError("File could not be read as GPX");
       } finally {
-        setIsProcessing(false)
+        setIsProcessing(false);
       }
     },
-    [setGPX]
-  )
+    [setGPX],
+  );
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       if (acceptedFiles.length > 0) {
-        processFile(acceptedFiles[0])
+        void processFile(acceptedFiles[0]);
       }
     },
-    [processFile]
-  )
+    [processFile],
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -61,18 +61,18 @@ export function StepGPXUpload() {
       "application/gpx+xml": [".gpx"],
     },
     multiple: false,
-  })
+  });
 
   const formatDistance = (meters: number) => {
-    const km = meters / 1000
-    const mi = km * 0.621371
-    return `${km.toFixed(2)} km (${mi.toFixed(2)} mi)`
-  }
+    const km = meters / 1000;
+    const mi = km * 0.621371;
+    return `${km.toFixed(2)} km (${mi.toFixed(2)} mi)`;
+  };
 
   const formatElevation = (meters: number) => {
-    const ft = meters * 3.28084
-    return `${Math.round(meters)} m (${Math.round(ft)} ft)`
-  }
+    const ft = meters * 3.28084;
+    return `${Math.round(meters)} m (${Math.round(ft)} ft)`;
+  };
 
   return (
     <div className="space-y-6">
@@ -102,9 +102,7 @@ export function StepGPXUpload() {
               <p className="text-lg font-medium">
                 {isDragActive ? "Drop your GPX file here" : "Drag & drop your GPX file"}
               </p>
-              <p className="text-sm text-muted-foreground mt-1">
-                or click to browse
-              </p>
+              <p className="text-sm text-muted-foreground mt-1">or click to browse</p>
             </div>
           </div>
         </div>
@@ -115,9 +113,7 @@ export function StepGPXUpload() {
               <CheckCircle2 className="h-5 w-5 text-primary" />
               <CardTitle className="text-lg">Course Analyzed</CardTitle>
             </div>
-            <CardDescription>
-              Your GPX file has been successfully processed
-            </CardDescription>
+            <CardDescription>Your GPX file has been successfully processed</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-3">
@@ -171,15 +167,11 @@ export function StepGPXUpload() {
       )}
 
       <div className="flex justify-end">
-        <Button
-          onClick={() => setStep(2)}
-          disabled={!gpx}
-          size="lg"
-        >
+        <Button onClick={() => setStep(2)} disabled={!gpx} size="lg">
           Next: Treadmill Settings
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>
     </div>
-  )
+  );
 }
