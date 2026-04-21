@@ -41,7 +41,9 @@ export function StepFitness() {
   };
 
   const racePace_kph = calculateRacePace();
+  const racePace_mph = racePace_kph !== null ? racePace_kph / 1.60934 : null;
   const maxSpeed_kph = treadmill.maxSpeed_mph * 1.60934;
+  const maxSpeed_mph = treadmill.maxSpeed_mph;
   const isPaceExceeded = racePace_kph !== null && racePace_kph > maxSpeed_kph;
 
   const isValid = racePace_kph !== null && racePace_kph > 0;

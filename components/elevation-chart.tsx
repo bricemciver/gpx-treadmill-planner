@@ -102,7 +102,7 @@ export function ElevationChart({ gpx, plan }: ElevationChartProps) {
   return (
     <div className="h-[300px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+        <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 30 }}>
           <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
           <XAxis
             dataKey="distance"
@@ -128,12 +128,12 @@ export function ElevationChart({ gpx, plan }: ElevationChartProps) {
               borderRadius: "var(--radius)",
             }}
           />
-          <Legend />
+          <Legend verticalAlign="top" height={36} />
           <Line
             type="monotone"
             dataKey="courseElevation"
             name="Course Elevation"
-            stroke="hsl(var(--chart-1))"
+            stroke="#3b82f6"
             strokeWidth={2}
             dot={false}
           />
@@ -141,7 +141,7 @@ export function ElevationChart({ gpx, plan }: ElevationChartProps) {
             type="monotone"
             dataKey="treadmillElevation"
             name="Treadmill Simulation"
-            stroke="hsl(var(--chart-2))"
+            stroke="#10b981"
             strokeWidth={2}
             strokeDasharray="5 5"
             dot={false}

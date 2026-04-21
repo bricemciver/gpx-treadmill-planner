@@ -65,6 +65,22 @@ export function StepPlanOutput() {
     window.print();
   };
 
+  // Merge consecutive intervals with same incline and speed
+  const mergedIntervals = plan.intervals.reduce((acc, interval) => {
+    const last = acc[acc.length - 1];
+    if (last && last.treadmillIncline_pct === interval.treadmillIncline_pct &&
+        Math.abs(last.speed_kph - interval.speed_kph) < 0.1) {
+      // Merge with previous interval
+      last.endDist_m = interval.endDist_m;
+      last.duration_sec += interval.duration_sec;
+      last.elevChange_m += interval.elevChange_m;
+      last.index = `${last.index}-${interval.index}`;
+    } else {
+      acc.push({ ...interval });
+    }
+    return acc;
+  }, [] as typeof plan.intervals);
+
   return (
     <TooltipProvider>
       <div className="space-y-6">
@@ -72,7 +88,7 @@ export function StepPlanOutput() {
           <div>
             <h2 className="text-2xl font-semibold tracking-tight">Your Training Plan</h2>
             <p className="text-muted-foreground mt-1">
-              {plan.intervals.length} intervals totaling{" "}
+              {mergedIntervals.length} intervals totaling{" "}
               {formatTotalDuration(plan.totalDuration_sec)}
             </p>
           </div>
@@ -108,13 +124,13 @@ export function StepPlanOutput() {
                     <TableHead>Distance</TableHead>
                     <TableHead className="text-right">Grade (%)</TableHead>
                     <TableHead className="text-right">Incline (%)</TableHead>
-                    <TableHead className="text-right">Speed (km/h)</TableHead>
+                    <TableHead className="text-right">Speed (mph)</TableHead>
                     <TableHead className="text-right">Duration</TableHead>
                     <TableHead className="text-right">Elev (m)</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {plan.intervals.map((interval, index) => {
+                  {mergedIntervals.map((interval, index) => {
                     const hasWarning = interval.inclineCapped || interval.speedCapped;
                     return (
                       <TableRow
@@ -140,8 +156,7 @@ export function StepPlanOutput() {
                           </div>
                         </TableCell>
                         <TableCell>
-                          {formatDistance(interval.startDist_m)} -{" "}
-                          {formatDistance(interval.endDist_m)}
+                          {formatDistance(interval.startDist_m)} - {formatDistance(interval.endDist_m)}
                         </TableCell>
                         <TableCell className="text-right font-mono">
                           {interval.courseGrade_pct > 0 ? "+" : ""}
@@ -159,7 +174,7 @@ export function StepPlanOutput() {
                             interval.speedCapped ? "text-amber-600 font-bold" : ""
                           }`}
                         >
-                          {interval.speed_kph.toFixed(1)}
+                          {(interval.speed_kph / 1.60934).toFixed(1)}
                         </TableCell>
                         <TableCell className="text-right font-mono">
                           {formatDuration(interval.duration_sec)}
