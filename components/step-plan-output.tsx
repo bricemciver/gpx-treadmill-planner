@@ -66,20 +66,26 @@ export function StepPlanOutput() {
   };
 
   // Merge consecutive intervals with same incline and speed
-  const mergedIntervals = plan.intervals.reduce((acc, interval) => {
-    const last = acc[acc.length - 1];
-    if (last && last.treadmillIncline_pct === interval.treadmillIncline_pct &&
-        Math.abs(last.speed_kph - interval.speed_kph) < 0.1) {
-      // Merge with previous interval
-      last.endDist_m = interval.endDist_m;
-      last.duration_sec += interval.duration_sec;
-      last.elevChange_m += interval.elevChange_m;
-      last.index = `${last.index}-${interval.index}`;
-    } else {
-      acc.push({ ...interval });
-    }
-    return acc;
-  }, [] as typeof plan.intervals);
+  const mergedIntervals = plan.intervals.reduce(
+    (acc, interval) => {
+      const last = acc[acc.length - 1];
+      if (
+        last &&
+        last.treadmillIncline_pct === interval.treadmillIncline_pct &&
+        Math.abs(last.speed_kph - interval.speed_kph) < 0.1
+      ) {
+        // Merge with previous interval
+        last.endDist_m = interval.endDist_m;
+        last.duration_sec += interval.duration_sec;
+        last.elevChange_m += interval.elevChange_m;
+        last.index = `${last.index}-${interval.index}`;
+      } else {
+        acc.push({ ...interval });
+      }
+      return acc;
+    },
+    [] as typeof plan.intervals,
+  );
 
   return (
     <TooltipProvider>
@@ -156,7 +162,8 @@ export function StepPlanOutput() {
                           </div>
                         </TableCell>
                         <TableCell>
-                          {formatDistance(interval.startDist_m)} - {formatDistance(interval.endDist_m)}
+                          {formatDistance(interval.startDist_m)} -{" "}
+                          {formatDistance(interval.endDist_m)}
                         </TableCell>
                         <TableCell className="text-right font-mono">
                           {interval.courseGrade_pct > 0 ? "+" : ""}
