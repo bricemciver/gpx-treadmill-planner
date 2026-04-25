@@ -30,7 +30,7 @@ export function generatePlan(gpx: GPXData, treadmill: TreadmillParams, fitness: 
     // 2% speed reduction per 1% grade (only for positive grades)
     const gradeAdjustment = treadmillIncline > 0 ? 1 - 0.02 * treadmillIncline : 1;
     const speedAdjust = baseSpeed * gradeAdjustment;
-    let treadmillSpeed = clamp(speedAdjust, 3.0, maxSpeed_kph);
+    let treadmillSpeed = clamp(speedAdjust, 3, maxSpeed_kph);
     treadmillSpeed = Math.round(treadmillSpeed * 10) / 10; // Round to nearest 0.1 kph
     const speedCapped = speedAdjust > maxSpeed_kph;
 
@@ -41,7 +41,7 @@ export function generatePlan(gpx: GPXData, treadmill: TreadmillParams, fitness: 
     totalDuration_sec += duration_sec;
 
     intervals.push({
-      index: i + 1,
+      index: String(i + 1),
       startDist_m: segment.startDist_m,
       endDist_m: segment.endDist_m,
       courseGrade_pct: Math.round(segment.grade_pct * 10) / 10,

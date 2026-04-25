@@ -32,10 +32,10 @@ export function StepGPXUpload() {
         const content = await file.text();
         const result = parseGPX(content);
 
-        if (!result.success) {
-          setError(result.error);
-        } else {
+        if (result.success) {
           setGPX(result.data);
+        } else {
+          setError(result.error);
         }
       } catch {
         setError("File could not be read as GPX");
@@ -83,30 +83,7 @@ export function StepGPXUpload() {
         </p>
       </div>
 
-      {!gpx ? (
-        <div
-          {...getRootProps()}
-          className={`
-            relative cursor-pointer rounded-lg border-2 border-dashed p-12
-            transition-colors
-            ${isDragActive ? "border-primary bg-primary/5" : "border-muted-foreground/25 hover:border-primary/50"}
-            ${isProcessing ? "pointer-events-none opacity-50" : ""}
-          `}
-        >
-          <input {...getInputProps()} />
-          <div className="flex flex-col items-center justify-center gap-4 text-center">
-            <div className="rounded-full bg-muted p-4">
-              <Upload className="h-8 w-8 text-muted-foreground" />
-            </div>
-            <div>
-              <p className="text-lg font-medium">
-                {isDragActive ? "Drop your GPX file here" : "Drag & drop your GPX file"}
-              </p>
-              <p className="text-sm text-muted-foreground mt-1">or click to browse</p>
-            </div>
-          </div>
-        </div>
-      ) : (
+      {gpx ? (
         <Card className="border-primary/50 bg-primary/5">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
@@ -157,6 +134,29 @@ export function StepGPXUpload() {
             </div>
           </CardContent>
         </Card>
+      ) : (
+        <div
+          {...getRootProps()}
+          className={`
+            relative cursor-pointer rounded-lg border-2 border-dashed p-12
+            transition-colors
+            ${isDragActive ? "border-primary bg-primary/5" : "border-muted-foreground/25 hover:border-primary/50"}
+            ${isProcessing ? "pointer-events-none opacity-50" : ""}
+          `}
+        >
+          <input {...getInputProps()} />
+          <div className="flex flex-col items-center justify-center gap-4 text-center">
+            <div className="rounded-full bg-muted p-4">
+              <Upload className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <div>
+              <p className="text-lg font-medium">
+                {isDragActive ? "Drop your GPX file here" : "Drag & drop your GPX file"}
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">or click to browse</p>
+            </div>
+          </div>
+        </div>
       )}
 
       {error && (

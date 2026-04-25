@@ -18,7 +18,7 @@ interface ElevationChartProps {
   plan: Plan;
 }
 
-export function ElevationChart({ gpx, plan }: ElevationChartProps) {
+export function ElevationChart({ gpx, plan }: Readonly<ElevationChartProps>) {
   const chartData = useMemo(() => {
     // Sample course elevation data at regular intervals for smoothness
     const samplePoints = 100;

@@ -52,7 +52,7 @@ function interpolateElevations(
     result.push({
       lat: point.lat,
       lon: point.lon,
-      ele: ele!,
+      ele: ele,
       dist_m: 0,
     });
   }
@@ -92,16 +92,16 @@ export function parseGPX(xmlString: string): ParseResult | ParseError {
     let hasAnyElevation = false;
 
     trkpts.forEach((trkpt) => {
-      const lat = parseFloat(trkpt.getAttribute("lat") || "");
-      const lon = parseFloat(trkpt.getAttribute("lon") || "");
+      const lat = Number.parseFloat(trkpt.getAttribute("lat") || "");
+      const lon = Number.parseFloat(trkpt.getAttribute("lon") || "");
       const eleEl = trkpt.querySelector("ele");
-      const ele = eleEl ? parseFloat(eleEl.textContent || "") : null;
+      const ele = eleEl ? Number.parseFloat(eleEl.textContent || "") : null;
 
-      if (!isNaN(lat) && !isNaN(lon)) {
-        if (ele !== null && !isNaN(ele)) {
+      if (!Number.isNaN(lat) && !Number.isNaN(lon)) {
+        if (ele !== null && !Number.isNaN(ele)) {
           hasAnyElevation = true;
         }
-        rawPoints.push({ lat, lon, ele: ele !== null && !isNaN(ele) ? ele : null });
+        rawPoints.push({ lat, lon, ele: ele !== null && !Number.isNaN(ele) ? ele : null });
       }
     });
 
@@ -195,7 +195,8 @@ export function parseGPX(xmlString: string): ParseResult | ParseError {
 
 function findPointAtDistance(points: TrackPoint[], distance: number): TrackPoint {
   if (distance <= 0) return points[0];
-  if (distance >= points[points.length - 1].dist_m) return points[points.length - 1];
+  const lastPoint = points.at(-1)
+  if (lastPoint && distance >= lastPoint.dist_m) return lastPoint;
 
   for (let i = 1; i < points.length; i++) {
     if (points[i].dist_m >= distance) {
@@ -213,5 +214,5 @@ function findPointAtDistance(points: TrackPoint[], distance: number): TrackPoint
     }
   }
 
-  return points[points.length - 1];
+  return lastPoint ?? points[0];
 }

@@ -39,7 +39,7 @@ export interface FitnessData {
 }
 
 export interface Interval {
-  index: number;
+  index: string;
   startDist_m: number;
   endDist_m: number;
   courseGrade_pct: number;

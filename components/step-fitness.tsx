@@ -41,7 +41,7 @@ export function StepFitness() {
   };
 
   const racePace_kph = calculateRacePace();
-  const racePace_mph = racePace_kph !== null ? racePace_kph / 1.60934 : null;
+  const racePace_mph = racePace_kph === null ? null : racePace_kph / 1.60934;
   const maxSpeed_kph = treadmill.maxSpeed_mph * 1.60934;
   const maxSpeed_mph = treadmill.maxSpeed_mph;
   const isPaceExceeded = racePace_kph !== null && racePace_kph > maxSpeed_kph;
@@ -109,7 +109,7 @@ export function StepFitness() {
                   min="0"
                   max="23"
                   value={goalHours}
-                  onChange={(e) => setGoalHours(parseInt(e.target.value) || 0)}
+                  onChange={(e) => setGoalHours(Number.parseInt(e.target.value) || 0)}
                   disabled={inputMode !== "goalTime"}
                 />
               </div>
@@ -121,7 +121,7 @@ export function StepFitness() {
                   min="0"
                   max="59"
                   value={goalMinutes}
-                  onChange={(e) => setGoalMinutes(parseInt(e.target.value) || 0)}
+                  onChange={(e) => setGoalMinutes(Number.parseInt(e.target.value) || 0)}
                   disabled={inputMode !== "goalTime"}
                 />
               </div>
@@ -133,7 +133,7 @@ export function StepFitness() {
                   min="0"
                   max="59"
                   value={goalSeconds}
-                  onChange={(e) => setGoalSeconds(parseInt(e.target.value) || 0)}
+                  onChange={(e) => setGoalSeconds(Number.parseInt(e.target.value) || 0)}
                   disabled={inputMode !== "goalTime"}
                 />
               </div>
@@ -163,7 +163,7 @@ export function StepFitness() {
                 min="20"
                 max="90"
                 value={vo2max}
-                onChange={(e) => setVo2max(parseFloat(e.target.value) || 0)}
+                onChange={(e) => setVo2max(Number.parseFloat(e.target.value) || 0)}
                 disabled={inputMode !== "vo2max"}
               />
               <p className="text-xs text-muted-foreground">
@@ -180,7 +180,7 @@ export function StepFitness() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Calculated Race Pace</p>
-                <p className="text-2xl font-bold">{racePace_mph.toFixed(1)} mph</p>
+                <p className="text-2xl font-bold">{racePace_mph?.toFixed(1)} mph</p>
                 <p className="text-sm text-muted-foreground">{formatPace(racePace_kph)}</p>
               </div>
               <div className="text-right">

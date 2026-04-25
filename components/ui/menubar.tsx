@@ -188,7 +188,7 @@ function MenubarShortcut({ className, ...props }: React.ComponentProps<"span">) 
   );
 }
 
-function MenubarSub({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Sub>) {
+function MenubarSub({ ...props }: Readonly<React.ComponentProps<typeof MenubarPrimitive.Sub>>) {
   return <MenubarPrimitive.Sub data-slot="menubar-sub" {...props} />;
 }
 

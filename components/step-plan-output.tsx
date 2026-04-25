@@ -62,16 +62,15 @@ export function StepPlanOutput() {
   };
 
   const handlePrint = () => {
-    window.print();
+    globalThis.print();
   };
 
   // Merge consecutive intervals with same incline and speed
   const mergedIntervals = plan.intervals.reduce(
     (acc, interval) => {
-      const last = acc[acc.length - 1];
+      const last = acc.at(-1);
       if (
-        last &&
-        last.treadmillIncline_pct === interval.treadmillIncline_pct &&
+        last?.treadmillIncline_pct === interval.treadmillIncline_pct &&
         Math.abs(last.speed_kph - interval.speed_kph) < 0.1
       ) {
         // Merge with previous interval

@@ -42,7 +42,7 @@ export function StepTreadmill() {
       newErrors.inclineMax = "Must be 40 or less";
     }
 
-    if (values.inclineStep_pct < 0.1 || values.inclineStep_pct > 2.0) {
+    if (values.inclineStep_pct < 0.1 || values.inclineStep_pct > 2) {
       newErrors.inclineStep = "Must be between 0.1 and 2.0";
     } else if (values.inclineStep_pct > values.inclineMax_pct - values.inclineMin_pct) {
       newErrors.inclineStep = "Must be less than incline range";
@@ -60,7 +60,7 @@ export function StepTreadmill() {
   };
 
   const handleChange = (field: keyof TreadmillParams, value: string) => {
-    const numValue = parseFloat(value) || 0;
+    const numValue = Number.parseFloat(value) || 0;
     const newForm = { ...form, [field]: numValue };
     setForm(newForm);
 
