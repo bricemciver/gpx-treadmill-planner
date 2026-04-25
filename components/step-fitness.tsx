@@ -163,7 +163,7 @@ export function StepFitness() {
                 min="20"
                 max="90"
                 value={vo2max}
-                onChange={(e) => setVo2max(parseInt(e.target.value) || 0)}
+                onChange={(e) => setVo2max(parseFloat(e.target.value) || 0)}
                 disabled={inputMode !== "vo2max"}
               />
               <p className="text-xs text-muted-foreground">
