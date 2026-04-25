@@ -6,7 +6,9 @@ import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-function ContextMenu({ ...props }: Readonly<React.ComponentProps<typeof ContextMenuPrimitive.Root>>) {
+function ContextMenu({
+  ...props
+}: Readonly<React.ComponentProps<typeof ContextMenuPrimitive.Root>>) {
   return <ContextMenuPrimitive.Root data-slot="context-menu" {...props} />;
 }
 
@@ -24,7 +26,9 @@ function ContextMenuPortal({ ...props }: React.ComponentProps<typeof ContextMenu
   return <ContextMenuPrimitive.Portal data-slot="context-menu-portal" {...props} />;
 }
 
-function ContextMenuSub({ ...props }: Readonly<React.ComponentProps<typeof ContextMenuPrimitive.Sub>>) {
+function ContextMenuSub({
+  ...props
+}: Readonly<React.ComponentProps<typeof ContextMenuPrimitive.Sub>>) {
   return <ContextMenuPrimitive.Sub data-slot="context-menu-sub" {...props} />;
 }
 

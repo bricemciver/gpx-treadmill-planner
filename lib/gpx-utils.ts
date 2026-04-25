@@ -195,7 +195,7 @@ export function parseGPX(xmlString: string): ParseResult | ParseError {
 
 function findPointAtDistance(points: TrackPoint[], distance: number): TrackPoint {
   if (distance <= 0) return points[0];
-  const lastPoint = points.at(-1)
+  const lastPoint = points.at(-1);
   if (lastPoint && distance >= lastPoint.dist_m) return lastPoint;
 
   for (let i = 1; i < points.length; i++) {

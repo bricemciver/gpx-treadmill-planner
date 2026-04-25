@@ -24,13 +24,14 @@ simulate real-world terrain.
 1. Clone the repository:
    ```bash
    git clone https://github.com/bricemciver/gpx-treadmill-planner.git
+   ```
 2. Install dependencies:
-`pnpm install`
+   `pnpm install`
 
 ## Getting Started
 
 1. Launch the development server:
-`pnpm run dev`
+   `pnpm run dev`
 2. Open http://localhost:3000 in your browser
 
 ## Accessing Different Components
@@ -69,11 +70,11 @@ Contributions, issues, and feature requests are welcome! Please open an issue to
 ## Running the Project
 
 1. Start the development server:
-pnpm run dev
+   pnpm run dev
 2. Build for production:
-pnpm run build
+   pnpm run build
 3. Run the production server:
-pnpm run start
+   pnpm run start
 
 ## 🧠 Workflow Overview
 

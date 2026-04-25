@@ -46,14 +46,14 @@
 
 1. Initial development uses `pnpm run dev` for local testing
 2. Code changes primarily target:
-    - Functional components in components/
-    - Wizard state logic in lib/store.ts
-    - Domain-specific logic in lib/gpx-utils.ts and lib/plan-generator.ts
+   - Functional components in components/
+   - Wizard state logic in lib/store.ts
+   - Domain-specific logic in lib/gpx-utils.ts and lib/plan-generator.ts
 3. Code quality maintained through:
-    - Pre-commit formatting with `pnpm run format`
-    - Linting checks via `pnpm run lint`
+   - Pre-commit formatting with `pnpm run format`
+   - Linting checks via `pnpm run lint`
 4. Deployment pipeline expects pre-built assets in next.config.mjs configuration
 
-The application represents a progressive web app that transforms GPX route data into structured treadmill       
+The application represents a progressive web app that transforms GPX route data into structured treadmill  
 training plans through a guided wizard interface, maintaining state consistency across four distinct interaction
- phases.
+phases.
