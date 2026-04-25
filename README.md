@@ -44,17 +44,19 @@ simulate real-world terrain.
 
 ## Codebase Structure
 
+```
 /app                    # Main Next.js pages
   └── page.tsx
 /app/components         # UI components
 /app/hooks              # Custom React hooks
-/lib                   # Business logic
+/lib                    # Business logic
   ├── store.ts          # Wizard state management
-  ├── gpx-utils.ts     # GPX data processing
-  └── plan-generator.ts# Workout plan generator
-/styles                # Global CSS
+  ├── gpx-utils.ts      # GPX data processing
+  └── plan-generator.ts # Workout plan generator
+/styles                 # Global CSS
 next.config.mjs         # Next.js configuration
 package.json            # Project metadata and dependencies
+```
 
 ## License
 
