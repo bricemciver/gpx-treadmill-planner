@@ -114,7 +114,8 @@ export function StepGPXUpload() {
                 <span className="text-xs ml-2">(then convert KML to GPX using online tools)</span>
               </li>
               <li>
-                <strong>AllTrails/Hiking Project:</strong> View trail → Look for "Export" or "Download"
+                <strong>AllTrails/Hiking Project:</strong> View trail → Look for "Export" or
+                "Download"
                 <span className="text-xs ml-2">(GPX option usually available)</span>
               </li>
             </ul>
@@ -125,28 +126,37 @@ export function StepGPXUpload() {
             </p>
             <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
               <li>
-                <a href="/samples/flat-5k.gpx" target="_blank" rel="noopener noreferrer">
-                  Flat 5K course (local sample)
-                  <ExternalLink className="ml-1 h-4 w-4" />
+                <a
+                  href="/samples/Carlsbad_5000_5K_Course-20260412.gpx"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Carlsbad 5000 5K Course - April 12, 2026 <ExternalLink className="ml-1 h-4 w-4" />
                 </a>
               </li>
               <li>
-                <a href="/samples/tempo-run.gpx" target="_blank" rel="noopener noreferrer">
-                  Tempo run course (local sample)
-                  <ExternalLink className="ml-1 h-4 w-4" />
+                <a
+                  href="/samples/AJC_Peachtree_Road_Race.gpx"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Peachtree Road Race 10K <ExternalLink className="ml-1 h-4 w-4" />
                 </a>
               </li>
               <li>
-                <a href="/samples/hilly-10k.gpx" target="_blank" rel="noopener noreferrer">
-                  Hilly 10K course (local sample)
-                  <ExternalLink className="ml-1 h-4 w-4" />
+                <a
+                  href="/samples/Garmin_Kansas_City_Half_Marathon"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Garmin Kansas City Half Marathon <ExternalLink className="ml-1 h-4 w-4" />
                 </a>
               </li>
             </ul>
           </div>
           <p className="text-xs text-muted-foreground">
-            Tip: Most outdoor apps and websites allow you to export your routes as GPX files for
-            use in other applications.
+            Tip: Most outdoor apps and websites allow you to export your routes as GPX files for use
+            in other applications.
           </p>
         </CardContent>
       </Card>
