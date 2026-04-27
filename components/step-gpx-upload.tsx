@@ -7,6 +7,7 @@ import { parseGPX } from "@/lib/gpx-utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { BookOpen, ExternalLink } from "lucide-react";
 import { Upload, CheckCircle2, AlertCircle, Mountain, Ruler, ArrowRight } from "lucide-react";
 
 export function StepGPXUpload() {
@@ -82,6 +83,85 @@ export function StepGPXUpload() {
           Upload your race course GPX file to analyze the elevation profile
         </p>
       </div>
+
+      <Card className="border-muted-foreground/20 bg-muted-foreground/5">
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2">
+            <BookOpen className="h-5 w-5 text-muted-foreground" />
+            <CardTitle className="text-lg">What is a GPX File?</CardTitle>
+          </div>
+          <CardDescription>
+            GPX (GPS Exchange Format) is an XML-based format for storing GPS data like waypoints,
+            tracks, and routes. It's commonly used by fitness apps, mapping services, and outdoor
+            devices to share route information.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-3">
+            <p className="text-sm text-muted-foreground">
+              <strong className="text-foreground">How to get a GPX file:</strong>
+            </p>
+            <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+              <li>
+                <strong>Garmin Connect:</strong> Go to your activity → Click "Export" → Choose "GPX"
+              </li>
+              <li>
+                <strong>Strava:</strong> Open an activity → Click the three dots (⋯) → "Export GPX"
+                <span className="text-xs ml-2">(may require Strava subscription)</span>
+              </li>
+              <li>
+                <strong>Google Maps:</strong> Create a route → Click menu → "Export to KML"
+                <span className="text-xs ml-2">(then convert KML to GPX using online tools)</span>
+              </li>
+              <li>
+                <strong>AllTrails/Hiking Project:</strong> View trail → Look for "Export" or "Download"
+                <span className="text-xs ml-2">(GPX option usually available)</span>
+              </li>
+            </ul>
+          </div>
+          <div className="space-y-3">
+            <p className="text-sm text-muted-foreground">
+              <strong className="text-foreground">Sample GPX files for testing:</strong>
+            </p>
+            <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+              <li>
+                <a href="https://www.gpsvisualizer.com/samples/sample_gpx.xml" target="_blank" rel="noopener noreferrer">
+                  Sample GPX from GPSVisualizer
+                  <ExternalLink className="ml-1 h-4 w-4" />
+                </a>
+              </li>
+              <li>
+                <a href="https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/overviewGPX.gpx" target="_blank" rel="noopener noreferrer">
+                  Simple GPX example
+                  <ExternalLink className="ml-1 h-4 w-4" />
+                </a>
+              </li>
+              <li>
+                <a href="/samples/flat-5k.gpx" target="_blank" rel="noopener noreferrer">
+                  Flat 5K course (local sample)
+                  <ExternalLink className="ml-1 h-4 w-4" />
+                </a>
+              </li>
+              <li>
+                <a href="/samples/tempo-run.gpx" target="_blank" rel="noopener noreferrer">
+                  Tempo run course (local sample)
+                  <ExternalLink className="ml-1 h-4 w-4" />
+                </a>
+              </li>
+              <li>
+                <a href="/samples/hilly-10k.gpx" target="_blank" rel="noopener noreferrer">
+                  Hilly 10K course (local sample)
+                  <ExternalLink className="ml-1 h-4 w-4" />
+                </a>
+              </li>
+            </ul>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Tip: Most outdoor apps and websites allow you to export your routes as GPX files for
+            use in other applications.
+          </p>
+        </CardContent>
+      </Card>
 
       {gpx ? (
         <Card className="border-primary/50 bg-primary/5">
