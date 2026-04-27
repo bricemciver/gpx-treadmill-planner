@@ -125,18 +125,6 @@ export function StepGPXUpload() {
             </p>
             <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
               <li>
-                <a href="https://www.gpsvisualizer.com/samples/sample_gpx.xml" target="_blank" rel="noopener noreferrer">
-                  Sample GPX from GPSVisualizer
-                  <ExternalLink className="ml-1 h-4 w-4" />
-                </a>
-              </li>
-              <li>
-                <a href="https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/overviewGPX.gpx" target="_blank" rel="noopener noreferrer">
-                  Simple GPX example
-                  <ExternalLink className="ml-1 h-4 w-4" />
-                </a>
-              </li>
-              <li>
                 <a href="/samples/flat-5k.gpx" target="_blank" rel="noopener noreferrer">
                   Flat 5K course (local sample)
                   <ExternalLink className="ml-1 h-4 w-4" />
